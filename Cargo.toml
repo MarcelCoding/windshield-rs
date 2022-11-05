@@ -1,0 +1,22 @@
+[package]
+name = "windshield-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.21", default-features = false, features = ["macros", "rt"] }
+tracing-subscriber = "0.3"
+tracing = "0.1"
+winit = "0.27"
+wgpu = "0.14"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+# by overriding our dependencies' compilation settings, we can further optimize for size
+# https://docs.rust-embedded.org/book/unsorted/speed-vs-size.html#optimizing-dependencies
+[profile.release.package."*"]
+codegen-units = 1
